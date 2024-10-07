@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { getUser } from "../lib/manageUser";
+import { getUser } from "../lib/local/manageUser";
 
 const GlobalContext = createContext();
 export const useGlobalContext = () => useContext(GlobalContext);

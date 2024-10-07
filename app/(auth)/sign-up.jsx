@@ -8,8 +8,8 @@ import CustomButton from '../../components/CustomButton'
 
 import { images } from '../../constants'
 import { Link, router } from 'expo-router'
-import { register } from '../../lib/auth'
-import { storeUser } from '../../lib/manageUser'
+import { register } from '../../lib/axiosAPI/auth'
+import { storeUser } from '../../lib/local/manageUser'
 
 const SignUp  = () => {
   const [form, setForm] = useState({

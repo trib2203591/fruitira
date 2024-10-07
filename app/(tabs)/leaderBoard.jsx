@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const Search = () => {
+const leaderBoard = () => {
   return (
     <View>
-      <Text>Search</Text>
+      <Text>leaderBoard</Text>
     </View>
   )
 }
 
-export default Search
+export default leaderBoard

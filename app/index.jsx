@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { images } from '../constants';
 import CustomButton from '../components/CustomButton';
-import {getCurrentUser, testGetUser, testRemoveUser} from '../lib/manageUser';
+import {getCurrentUser, testGetUser, testRemoveUser} from '../lib/local/manageUser';
 import { useGlobalContext } from '../context/GlobalProvider';
 
 
@@ -13,9 +13,7 @@ export default function App() {
   const{isLoading, isLoggedIn} = useGlobalContext();
 
   if (!isLoading && isLoggedIn) {
-    // Use replace instead of Redirect component
-    router.replace('/home');
-    return null;
+    return <Redirect href="/home" />;
   }
 
   return (

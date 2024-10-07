@@ -9,13 +9,13 @@ import CustomButton from '../../components/CustomButton'
 
 import { images } from '../../constants'
 import { Link } from 'expo-router'
-import { login, test } from '../../lib/auth'
-import { storeUser } from '../../lib/manageUser'
+import { login } from '../../lib/axiosAPI/auth'
+import { storeUser } from '../../lib/local/manageUser'
 
 
 const SignIn = () => {
   const [form, setForm] = useState({
-    email: '',
+    username: '',
     password: ''
   })
 
@@ -30,7 +30,7 @@ const SignIn = () => {
     try {
       const result = await login(form.username, form.password)
       if(result.status === 200){
-        Alert.alert('login OK')
+        Alert.alert(result.message)
         await storeUser(form.username, form.password)
         router.replace('/home')
       }

@@ -38,6 +38,21 @@ const TabsLayout = () => {
             }}
         >
             <Tabs.Screen 
+                name="leaderBoard"  
+                options={{
+                    tile: 'Leader Board',
+                    headerShown: false,
+                    tabBarIcon: ({ color, focused }) => (
+                        <TabIcon
+                        icon={icons.bookmark}
+                        color={color}
+                        name="Leader Board"
+                        focused={focused}
+                        />
+                    )
+                }}
+            />
+            <Tabs.Screen 
                 name="home"  
                 options={{
                     tile: 'Home',
@@ -47,36 +62,6 @@ const TabsLayout = () => {
                         icon={icons.home}
                         color={color}
                         name="Home"
-                        focused={focused}
-                        />
-                    )
-                }}
-            />
-            <Tabs.Screen 
-                name="bookmark"  
-                options={{
-                    tile: 'Bookmark',
-                    headerShown: false,
-                    tabBarIcon: ({ color, focused }) => (
-                        <TabIcon
-                        icon={icons.bookmark}
-                        color={color}
-                        name="Bookmark"
-                        focused={focused}
-                        />
-                    )
-                }}
-            />
-            <Tabs.Screen 
-                name="create"  
-                options={{
-                    tile: 'Create',
-                    headerShown: false,
-                    tabBarIcon: ({ color, focused }) => (
-                        <TabIcon
-                        icon={icons.plus}
-                        color={color}
-                        name="Create"
                         focused={focused}
                         />
                     )
