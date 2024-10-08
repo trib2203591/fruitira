@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { images } from '../constants';
 import CustomButton from '../components/CustomButton';
-import {getCurrentUser, testGetUser, testRemoveUser} from '../lib/local/manageUser';
+import {getCurrentUser, testRemoveUser} from '../lib/local/manageUser';
 import { useGlobalContext } from '../context/GlobalProvider';
 
 
@@ -59,20 +59,9 @@ export default function App() {
             handlePress={() => router.push('/sign-in')}
             containerStyles="w-full mt-7" 
           />
-
-          <CustomButton
-            title="test"
-            handlePress={testGetUser}
-            containerStyles="w-full mt-7" 
-          />
           <CustomButton
             title="test2"
             handlePress={getCurrentUser}
-            containerStyles="w-full mt-7" 
-          />
-          <CustomButton
-            title="delete"
-            handlePress={testRemoveUser}
             containerStyles="w-full mt-7" 
           />
 

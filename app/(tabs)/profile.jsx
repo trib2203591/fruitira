@@ -4,7 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { router } from 'expo-router';
 
 import CustomButton from '../../components/CustomButton';
-import { testGetUser, removeUser} from '../../lib/local/manageUser';
+import { removeUser } from '../../lib/local/manageUser';
 import { useGlobalContext } from '../../context/GlobalProvider';
 
 

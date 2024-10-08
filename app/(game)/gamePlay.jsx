@@ -1,29 +1,35 @@
-import { View, Text, SafeAreaView, ScrollView, StatusBar } from 'react-native'
+import { View, Text, SafeAreaView, ScrollView, StatusBar, Alert } from 'react-native'
 import { useState, useEffect } from 'react'
 
 import CustomCard from '../../components/CustomCard'
 import CustomButton from '../../components/CustomButton'
 
 import { getGame } from '../../lib/axiosAPI/game'
+import { useGlobalContext } from '../../context/GlobalProvider';
+import { updateScore } from '../../lib/local/manageScore'
 
 const gamePlay = () => {
+  const {user} = useGlobalContext();
   const [options, setOptions] = useState(null)
   const [question, setQuestion] = useState(null)
   const [answer, setAnswer] = useState(null)
   const [playing, setPlaying] = useState(true)
-  const [score, setScore] = useState(0)
+  const [score, setScore] = useState(user.score)
 
   useEffect(() => {
     start()
   }, [])
 
   const start = async () => {
-    let result = await getGame()
-    if(question){
-      while(result.question.question_id === question.question_id){ 
-        result = await getGame()
+      let result = await getGame();
+    
+      result = result.data
+      if(question){
+        while(result.question.question_id === question.question_id){ 
+          result = await getGame()
+          result = result.data
+        }
       }
-    }
     setPlaying(true)
     setAnswer(null)
     setOptions(result.options)
@@ -37,7 +43,12 @@ const gamePlay = () => {
   const checkAnswer = () => {
     if (answer.key_id === question.key_id) {
       setScore(score + 1)
+      updateScore(score + 1)
+    } else {
+      setScore(score - 1)
+      updateScore(score - 1)
     }
+
     setPlaying(false)
   }
 
@@ -71,11 +82,13 @@ const gamePlay = () => {
               title={options[0].key}
               handlePress={() => selectAnswer(options[0])}
               containerStyles={`flex-1 mr-1 h-full ${getButtonColor(options[0])}`}
+              isLoading={playing? false: true}
             />
             <CustomButton
               title={options[1].key}
               handlePress={() => selectAnswer(options[1])}
               containerStyles={`flex-1 ml-1 h-full ${getButtonColor(options[1])}`}
+              isLoading={playing? false: true}
             />
           </View>
           <View className="flex-row justify-center items-center mt-2 h-[125px]">
@@ -83,11 +96,13 @@ const gamePlay = () => {
               title={options[2].key}
               handlePress={() => selectAnswer(options[2])}
               containerStyles={`flex-1 mr-1 h-full ${getButtonColor(options[2])}`}
+              isLoading={playing? false: true}
             />
             <CustomButton
               title={options[3].key}
               handlePress={() => selectAnswer(options[3])}
               containerStyles={`flex-1 ml-1 h-full ${getButtonColor(options[3])}`}
+              isLoading={playing? false: true}
             />
           </View>
         </>

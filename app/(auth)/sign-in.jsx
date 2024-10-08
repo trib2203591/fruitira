@@ -11,6 +11,7 @@ import { images } from '../../constants'
 import { Link } from 'expo-router'
 import { login } from '../../lib/axiosAPI/auth'
 import { storeUser } from '../../lib/local/manageUser'
+import { getScore } from '../../lib/axiosAPI/score'
 
 
 const SignIn = () => {
@@ -31,7 +32,8 @@ const SignIn = () => {
       const result = await login(form.username, form.password)
       if(result.status === 200){
         Alert.alert(result.message)
-        await storeUser(form.username, form.password)
+        const score = await getScore(result.user_id)
+        await storeUser(result.user_id, form.username, form.password, score[0].score)
         router.replace('/home')
       }
       else{

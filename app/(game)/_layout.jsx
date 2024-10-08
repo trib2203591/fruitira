@@ -8,7 +8,6 @@ const gameLayout = () => {
     <>
     <Stack>
         <Stack.Screen name="gamePlay" options={{headerShown: false}} />
-        <Stack.Screen name="test" options={{headerShown: false}} />
     </Stack>
 
     <StatusBar backgroundColor='#000000' style='inverted'/>

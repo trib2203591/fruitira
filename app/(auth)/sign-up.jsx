@@ -31,15 +31,18 @@ const SignUp  = () => {
       try {
         const result = await register(form.username, form.password)
         setisSubmitting(true);
-        console.log(result.status)
-        console.log(result.message)
-        if(result.status === 201) {
-          Alert.alert('register OK')
-          await storeUser(form.username, form.password)
-          router.replace('/home');
+        if(result){
+          if(result.status === 201) {
+            Alert.alert('register OK')
+            await storeUser(result.user_id, form.username, form.password, 0)
+            router.replace('/home');
+          }
+          else {
+            Alert.alert('User already exist, please login')
+          }
         }
         else {
-          Alert.alert('User already exist, please login')
+          Alert.alert('failed to connect to server')
         }
       } catch (error) {
         Alert.alert('error', error.message)

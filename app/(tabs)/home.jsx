@@ -3,6 +3,7 @@ import React from 'react'
 import { router } from 'expo-router'
 
 import CustomButton from '../../components/CustomButton'
+import { test } from '../../lib/local/manageUser'
 
 const Home = () => {
   return (
@@ -17,7 +18,7 @@ const Home = () => {
         />
         <CustomButton
           title="test"
-          handlePress={() => {router.push('/test')}}
+          handlePress={test}
           containerStyles="w-full mt-7" 
         />
       </View>
