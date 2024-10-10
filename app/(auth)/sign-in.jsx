@@ -12,9 +12,11 @@ import { Link } from 'expo-router'
 import { login } from '../../lib/axiosAPI/auth'
 import { storeUser } from '../../lib/local/manageUser'
 import { getScore } from '../../lib/axiosAPI/score'
+import { useGlobalContext } from '../../context/GlobalProvider';
 
 
 const SignIn = () => {
+  const {setUser} = useGlobalContext()
   const [form, setForm] = useState({
     username: '',
     password: ''
@@ -32,8 +34,19 @@ const SignIn = () => {
       const result = await login(form.username, form.password)
       if(result.status === 200){
         Alert.alert(result.message)
+
         const score = await getScore(result.user_id)
+
         await storeUser(result.user_id, form.username, form.password, score[0].score)
+
+        const value = {
+          user_id: result.user_id,
+          username: form.username,
+          password: form.password,
+          score: score[0].score
+        }
+        setUser(value)
+
         router.replace('/home')
       }
       else{

@@ -10,8 +10,10 @@ import { images } from '../../constants'
 import { Link, router } from 'expo-router'
 import { register } from '../../lib/axiosAPI/auth'
 import { storeUser } from '../../lib/local/manageUser'
+import { useGlobalContext } from '../../context/GlobalProvider';
 
 const SignUp  = () => {
+  const {setUser} = useGlobalContext()
   const [form, setForm] = useState({
     confirmPassword: '',
     password: '',
@@ -35,6 +37,15 @@ const SignUp  = () => {
           if(result.status === 201) {
             Alert.alert('register OK')
             await storeUser(result.user_id, form.username, form.password, 0)
+
+            const value = {
+              user_id: result.user_id,
+              username: form.username,
+              password: form.password,
+              score: 0
+            }
+            setUser(value)
+
             router.replace('/home');
           }
           else {

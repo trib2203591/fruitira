@@ -9,10 +9,11 @@ import { useGlobalContext } from '../../context/GlobalProvider';
 
 
 const Profile = () => {
-  const {user} = useGlobalContext();
+  const {user, setIsLoggedIn} = useGlobalContext();
   const logOut = async () => {
     try {
       const user = await removeUser()
+      setIsLoggedIn(false)
       router.replace('/');
     } catch (error) {
       console.log(error)

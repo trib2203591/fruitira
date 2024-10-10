@@ -33,10 +33,9 @@ const GlobalProvider = ({ children }) => {
         }
     };
 
-    // UseEffect runs only once on component mount due to the empty dependency array
     useEffect(() => {
         prepareApp();
-    }, []); // Empty dependency array ensures it runs once
+    }, []);
 
     return (
         <GlobalContext.Provider

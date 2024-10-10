@@ -9,7 +9,7 @@ import { useGlobalContext } from '../../context/GlobalProvider';
 import { updateScore } from '../../lib/local/manageScore'
 
 const gamePlay = () => {
-  const {user} = useGlobalContext();
+  const {user, setUser} = useGlobalContext()
   const [options, setOptions] = useState(null)
   const [question, setQuestion] = useState(null)
   const [answer, setAnswer] = useState(null)
@@ -21,19 +21,28 @@ const gamePlay = () => {
   }, [])
 
   const start = async () => {
+    try {
       let result = await getGame();
-    
-      result = result.data
+      result = result.data;
+  
       if(question){
         while(result.question.question_id === question.question_id){ 
-          result = await getGame()
-          result = result.data
+          result = await getGame();
+          result = result.data;
         }
       }
-    setPlaying(true)
-    setAnswer(null)
-    setOptions(result.options)
-    setQuestion(result.question)
+  
+      setPlaying(true);
+      setAnswer(null);
+      setOptions(result.options);
+      setQuestion(result.question);
+    } catch (error) {
+      Alert.alert("Error", "Unable to fetch game data. Please check your connection.");
+      setOptions(null);
+      setQuestion(null);
+      setAnswer(null);
+      setPlaying(false);
+    }  
   }
 
   const selectAnswer = (select) => {
@@ -44,11 +53,15 @@ const gamePlay = () => {
     if (answer.key_id === question.key_id) {
       setScore(score + 1)
       updateScore(score + 1)
+      setUser({...user, score: score+1})
     } else {
-      setScore(score - 1)
-      updateScore(score - 1)
+      if(score > 0) {
+        setScore(score - 1)
+        updateScore(score - 1)
+        setUser({...user, score: score-1})
+      }
     }
-
+    
     setPlaying(false)
   }
 
