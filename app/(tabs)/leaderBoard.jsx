@@ -102,7 +102,7 @@ const LeaderboardScreen = () => {
           />
         </View>
       
-        <StatusBar backgroundColor='#000000'
+        <StatusBar backgroundColor='#161622'
             style='inverted'
         />
     </SafeAreaView>

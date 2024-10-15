@@ -5,6 +5,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { images } from '../constants';
 import CustomButton from '../components/CustomButton';
+import Logo from '../components/Logo';
+
+
 import { useGlobalContext } from '../context/GlobalProvider';
 
 
@@ -19,11 +22,7 @@ export default function App() {
     <SafeAreaView className="bg-primary h-full">
       <ScrollView >
         <View className="w-full justify-center items-center h-full px-4">
-          <Image 
-            source={images.logo}
-            className="w-[130px] h-[84px]"
-            resizeMode="contain"  
-          />
+          <Logo />
 
           <Image
             source={images.cards}
@@ -33,22 +32,22 @@ export default function App() {
 
           <View className="relative mt-5">
             <Text className="text-3xl text-white font-bold text-center">
-              This is a video or images app something, named {' '}
+              This is an app for learning fruit vocabulary, named {' '}
               <Text className="text-secondary-200">
-                Aora
+                Fruity
               </Text>
             </Text>
 
             <Image 
               source={images.path}
-              className="w-[136px] h-[15px] absolute -bottom-2 right-10"
+              className="w-[136px] h-[15px] absolute -bottom-2 right-16"
               resizeMode='contain'
             /> 
           </View>
 
           <View>
             <Text className="text-sm font-pregular text-gray-100 mt-7 text-center">
-              A place where creativity meets innovation: Embark on a journey of boundless possibility with Aora
+              A place where fruit and trai cay, and fruit and fruit
             </Text>
 
           </View>
@@ -59,7 +58,7 @@ export default function App() {
             containerStyles="w-full mt-7" 
           />
           
-          <StatusBar backgroundColor='#000000'
+          <StatusBar backgroundColor='#161622'
             style='inverted'
           />
           

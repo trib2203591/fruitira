@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Image, Alert } from 'react-native'
+import { View, Text, ScrollView, Image, Alert, StatusBar } from 'react-native'
 import { useState } from 'react'
 import { router } from 'expo-router'
 import React from 'react'
@@ -13,6 +13,7 @@ import { login } from '../../lib/axiosAPI/auth'
 import { storeUser } from '../../lib/local/manageUser'
 import { getScore } from '../../lib/axiosAPI/score'
 import { useGlobalContext } from '../../context/GlobalProvider';
+import Logo from '../../components/Logo'
 
 
 const SignIn = () => {
@@ -26,7 +27,7 @@ const SignIn = () => {
 
   const submit = async () => {
     if(!form.username || !form.password) {
-      Alert.alert('error','fill all the fields, fucking ass')
+      Alert.alert('error','fill all the fields')
     }
     setisSubmitting(true);
 
@@ -63,12 +64,9 @@ const SignIn = () => {
     <SafeAreaView className="bg-primary h-full">
       <ScrollView>
         <View className="w-full justify-center items-center h-full px-4 my-6">
-          <Image source={images.logo}
-            resizeMode='contain' 
-            className="w-[115px] h-[35px]"
-          />
+          <Logo />
 
-          <Text className="text-2xl text-white mt-10 font-semibold">Log in to Aora</Text>
+          <Text className="text-2xl text-white mt-10 font-semibold">Log in to Fruity</Text>
           
           <FormField title="Username"
             value={form.username}
@@ -95,6 +93,9 @@ const SignIn = () => {
 
           </View>
         </View>
+        <StatusBar backgroundColor='#161622'
+          style='inverted'
+      />
       </ScrollView>
     </SafeAreaView>
   )

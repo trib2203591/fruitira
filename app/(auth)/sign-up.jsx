@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Image, Alert } from 'react-native'
+import { View, Text, ScrollView, Image, Alert, StatusBar } from 'react-native'
 import { useState } from 'react'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -11,6 +11,7 @@ import { Link, router } from 'expo-router'
 import { register } from '../../lib/axiosAPI/auth'
 import { storeUser } from '../../lib/local/manageUser'
 import { useGlobalContext } from '../../context/GlobalProvider';
+import Logo from '../../components/Logo'
 
 const SignUp  = () => {
   const {setUser} = useGlobalContext()
@@ -24,7 +25,7 @@ const SignUp  = () => {
 
   const submit = async () => {
     if(!form.confirmPassword || !form.password || !form.username) {
-      Alert.alert('Warning','fill all the fields, fucking ass')
+      Alert.alert('Warning','fill all the fields')
     }
     else if(form.confirmPassword !== form.password) {
       Alert.alert('Warning', "passwords don't match")
@@ -67,12 +68,9 @@ const SignUp  = () => {
     <SafeAreaView className="bg-primary h-full">
       <ScrollView>
         <View className="w-full justify-center items-center h-full px-4 my-6">
-          <Image source={images.logo}
-            resizeMode='contain' 
-            className="w-[115px] h-[35px]"
-          />
+          <Logo/>
 
-          <Text className="text-2xl text-white mt-10 font-semibold">Log in to Aora</Text>
+          <Text className="text-2xl text-white mt-10 font-semibold">Create a new account</Text>
           
           <FormField title="Username"
             value={form.username}
@@ -105,6 +103,9 @@ const SignUp  = () => {
 
           </View>
         </View>
+        <StatusBar backgroundColor='#161622'
+          style='inverted'
+      />
       </ScrollView>
     </SafeAreaView>
   )

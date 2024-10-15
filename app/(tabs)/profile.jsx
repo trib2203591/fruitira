@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, SafeAreaView, ScrollView } from 'react-native'
 import React from 'react'
 import { StatusBar } from 'expo-status-bar';
-import { router } from 'expo-router';
+import { router, Link } from 'expo-router';
 
 import CustomButton from '../../components/CustomButton';
 import { removeUser } from '../../lib/local/manageUser';
@@ -30,8 +30,12 @@ const Profile = () => {
             handlePress={logOut}
             containerStyles="w-full mt-7" 
           />
+          <View className="flex-row justify-center items-center pt-6">
+            <Text className="text-sm text-white font-bold">If you want to delete your account, </Text>
+            <Link href="/deleteAccount" className="text-sm text-secondary underline font-bold">click here</Link>
+          </View>
         </View>
-        <StatusBar backgroundColor='#000000'
+        <StatusBar backgroundColor='#161622'
             style='inverted'
         />
       </ScrollView>
