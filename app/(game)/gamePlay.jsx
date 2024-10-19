@@ -129,7 +129,9 @@ const gamePlay = () => {
           <CustomButton title="Next" handlePress={start} containerStyles="h-[50px] w-full mt-7 bg-green-500"/>
         )}
 
-        <StatusBar backgroundColor='#000000' style='inverted'/>
+          <StatusBar backgroundColor='#161622'
+            style='light'
+          />
       </View>
     </ScrollView>
   </SafeAreaView>

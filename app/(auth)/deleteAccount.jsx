@@ -75,6 +75,9 @@ const delAccount = () => {
           />
 
         </View>
+        <StatusBar backgroundColor='#161622'
+            style='light'
+          />
       </ScrollView>
     </SafeAreaView>
   )

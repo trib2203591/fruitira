@@ -36,8 +36,8 @@ const Profile = () => {
           </View>
         </View>
         <StatusBar backgroundColor='#161622'
-            style='inverted'
-        />
+            style='light'
+          />
       </ScrollView>
     </SafeAreaView>
   )

@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Image, Alert, StatusBar } from 'react-native'
+import { View, Text, ScrollView, Alert, StatusBar } from 'react-native'
 import { useState } from 'react'
 import { router } from 'expo-router'
 import React from 'react'
@@ -7,7 +7,6 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import FormField from '../../components/FormField'
 import CustomButton from '../../components/CustomButton'
 
-import { images } from '../../constants'
 import { Link } from 'expo-router'
 import { login } from '../../lib/axiosAPI/auth'
 import { storeUser } from '../../lib/local/manageUser'
@@ -28,6 +27,7 @@ const SignIn = () => {
   const submit = async () => {
     if(!form.username || !form.password) {
       Alert.alert('error','fill all the fields')
+      return
     }
     setisSubmitting(true);
 
@@ -92,10 +92,10 @@ const SignIn = () => {
             <Link href="/sign-up" className="text-lg font-psemibold text-secondary-100">Register</Link>
 
           </View>
+          <StatusBar backgroundColor='#161622'
+            style='light'
+          />
         </View>
-        <StatusBar backgroundColor='#161622'
-          style='inverted'
-      />
       </ScrollView>
     </SafeAreaView>
   )

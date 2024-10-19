@@ -1,17 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { SafeAreaView, View, Text, FlatList, ActivityIndicator, RefreshControl, StatusBar } from 'react-native';
+import { useFocusEffect } from 'expo-router'
 
 import { getLeaderboard } from '../../lib/axiosAPI/score'; 
+import { useGlobalContext } from '../../context/GlobalProvider'
 
 const LeaderboardScreen = () => {
+  const {user} = useGlobalContext();
   const [leaderboard, setLeaderboard] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
 
-  useEffect(() => {
-    fetchLeaderboard();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+        fetchLeaderboard();
+      },
+      [],)
+  )
 
   const fetchLeaderboard = async () => {
     setRefreshing(true);  
@@ -41,15 +47,21 @@ const LeaderboardScreen = () => {
       rankColor = 'text-orange-500';
       backgroundColor = 'bg-orange-200';
     } else {
-      rankColor = 'text-gray-500';
-      backgroundColor = 'bg-gray-100'; 
+      rankColor = 'text-base';
+      backgroundColor = 'bg-gray-500'; 
     }
     return (
     <View className={`${backgroundColor} w-full my-2 p-4 rounded-lg shadow`}>
       <View className="flex-row justify-between items-center">
         <Text className={`${rankColor} left-6 font-bold text-lg`}>{index + 1}</Text>
-        <Text className={`${rankColor}text-base font-pmedium`}>{item.username}</Text>
-        <Text className={`right-6 text-base font-bold ${item.score >= 0 ? "text-green-500" : "text-red-500"}`}>{item.score}</Text>
+        {user.username === item.username ? 
+          <View className="flex-row items-center">
+            <Text className={`text-base font-pmedium`}>{item.username}</Text>
+            <Text className={`text-blue-500 font-pmedium`}>(You)</Text>
+          </View>
+            : 
+          <Text className={`text-base font-pmedium`}>{item.username}</Text>}
+        <Text className={"right-6 text-base font-bold text-green-500"}>{item.score}</Text>
       </View>
     </View>
     );
@@ -103,8 +115,8 @@ const LeaderboardScreen = () => {
         </View>
       
         <StatusBar backgroundColor='#161622'
-            style='inverted'
-        />
+            style='light'
+          />
     </SafeAreaView>
     );
 };

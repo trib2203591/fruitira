@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { ScrollView, Text, View, Image, Alert } from 'react-native';
+import { ScrollView, Text, View, Image} from 'react-native';
 import { Redirect, router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -58,12 +58,10 @@ export default function App() {
             containerStyles="w-full mt-7" 
           />
           
-          <StatusBar backgroundColor='#161622'
-            style='inverted'
-          />
-          
         </View>
-
+        <StatusBar backgroundColor='#161622'
+            style='light'
+          />
       </ScrollView>
     </SafeAreaView>
   );
