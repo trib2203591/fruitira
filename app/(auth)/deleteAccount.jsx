@@ -36,11 +36,11 @@ const delAccount = () => {
     try {
       const result = await deleteAccount(user.username, form.password)
       if(result.status === 200){
-        Alert.alert('Account deleted')
+        Alert.alert(result.message)
         router.replace('/sign-in')
       }
       else{
-        Alert.alert('Wrong password')
+        Alert.alert(result.message)
       }
     } catch (error) {
       Alert.alert('error', error.message)
