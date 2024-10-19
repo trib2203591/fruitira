@@ -50,11 +50,11 @@ const SignUp  = () => {
             router.replace('/home');
           }
           else {
-            Alert.alert('User already exist, please login')
+            Alert.alert(result.message)
           }
         }
         else {
-          Alert.alert('failed to connect to server')
+          Alert.alert('something went wrong')
         }
       } catch (error) {
         Alert.alert('error', error.message)
@@ -99,7 +99,7 @@ const SignUp  = () => {
             <Text className="text-white">
               Have an account already?
             </Text>
-            <Link href="/sign-in" className="text-lg font-psemibold text-secondary-100">Login</Link>
+            <Link href="/sign-in" className="text-lg font-psemibold text-secondary">Login</Link>
 
           </View>
         </View>

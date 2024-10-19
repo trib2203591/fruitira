@@ -51,7 +51,7 @@ const SignIn = () => {
         router.replace('/home')
       }
       else{
-        Alert.alert('wrong username or password')
+        Alert.alert(result.message)
       }
     } catch (error) {
       Alert.alert('error', error.message)
@@ -89,7 +89,7 @@ const SignIn = () => {
             <Text className="text-white">
               Don't have an account?
             </Text>
-            <Link href="/sign-up" className="text-lg font-psemibold text-secondary-100">Register</Link>
+            <Link href="/sign-up" className="text-lg font-psemibold text-secondary">Register</Link>
 
           </View>
           <StatusBar backgroundColor='#161622'

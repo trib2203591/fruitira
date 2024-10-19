@@ -1,4 +1,5 @@
-import { View, Text, ScrollView, Image, Alert } from 'react-native'
+import { View, Text, ScrollView, Alert } from 'react-native'
+import { StatusBar } from 'expo-status-bar'
 import { useState } from 'react'
 import { router } from 'expo-router'
 import React from 'react'

@@ -84,7 +84,7 @@ const LeaderboardScreen = () => {
   }
 
   const ListHeader = () => (
-    <View className=" bg-primary rounded-lg shadow p-4 border-4 border-secondary">
+    <View className=" bg-primary rounded-lg shadow p-4 border-4 border-secondary-100">
             <Text className="text-3xl text-white font-bold text-center">Leaderboard</Text>
             <View className="flex-row justify-between mt-4 p-2 rounded-lg">
               <Text className="text-lg text-white font-bold">Rank</Text>

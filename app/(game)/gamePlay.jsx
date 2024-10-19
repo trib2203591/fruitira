@@ -74,7 +74,7 @@ const gamePlay = () => {
         return 'bg-red-500' 
       }
     }
-    return answer === option ? 'bg-blue-500' : 'bg-gray-500' 
+    return answer === option ? 'bg-secondary' : 'bg-gray-500' 
   }
 
   return (
