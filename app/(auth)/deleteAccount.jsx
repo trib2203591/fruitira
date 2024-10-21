@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Alert } from 'react-native'
+import { View, Text, ScrollView, Alert, ImageBackground } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import { useState } from 'react'
 import { router } from 'expo-router'
@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import FormField from '../../components/FormField'
 import CustomButton from '../../components/CustomButton'
+import { images } from '../../constants'
 
 import { deleteAccount } from '../../lib/axiosAPI/auth'
 import { useGlobalContext } from '../../context/GlobalProvider';
@@ -51,11 +52,12 @@ const delAccount = () => {
 
   return (
     <SafeAreaView className="bg-primary h-full">
+      <ImageBackground source={images.backGround} resizeMode="cover" className="h-full">
       <ScrollView>
         <View className="w-full justify-center items-center h-full px-4 my-6">
           <Logo />
 
-          <Text className="text-2xl text-white mt-10 font-semibold">Delete your account</Text>
+          <Text className="text-2xl text-secondary-200 mt-10 font-semibold">Delete your account</Text>
           
           <FormField title="Password"
             value={form.password}
@@ -76,10 +78,11 @@ const delAccount = () => {
           />
 
         </View>
-        <StatusBar backgroundColor='#161622'
+        <StatusBar backgroundColor='#9cdcfe'
             style='light'
           />
       </ScrollView>
+      </ImageBackground>
     </SafeAreaView>
   )
 }

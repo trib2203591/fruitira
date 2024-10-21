@@ -1,8 +1,9 @@
-import { View, Text, SafeAreaView, ScrollView, StatusBar, Alert } from 'react-native'
+import { View, Text, SafeAreaView, ScrollView, StatusBar, Alert, ImageBackground } from 'react-native'
 import { useState, useEffect } from 'react'
 
 import CustomCard from '../../components/CustomCard'
 import CustomButton from '../../components/CustomButton'
+import { images } from '../../constants'
 
 import { getGame } from '../../lib/axiosAPI/game'
 import { useGlobalContext } from '../../context/GlobalProvider';
@@ -68,22 +69,23 @@ const gamePlay = () => {
   const getButtonColor = (option) => {
     if (!playing) {
       if (option.key_id === question.key_id) {
-        return 'bg-green-500'
+        return 'bg-[#8EFF9A]'
       }
       if (option.key_id === answer.key_id && answer.key_id !== question.key_id) {
-        return 'bg-red-500' 
+        return 'bg-[#FF7B7E]' 
       }
     }
-    return answer === option ? 'bg-secondary' : 'bg-gray-500' 
+    return answer === option ? 'bg-secondary-100' : 'bg-[#bdbdbd]' 
   }
 
   return (
-    <SafeAreaView className="bg-primary h-full">
+    <SafeAreaView className="bg-primary h-full ">
+    <ImageBackground source={images.backGround} resizeMode="cover" className="h-full">
     <ScrollView>
       <View className="w-full justify-center items-center h-dvh px-4 my-6 ">
-        <Text className="text-2xl text-white mt-7 font-semibold">score: {score}</Text>
+        <Text className="text-2xl text-secondary-200 mt-7 font-psemibold">score: {score}</Text>
         {question?
-        <CustomCard title={question.word} containerStyles="w-full mt-7 h-[250px]" textStyles="text-center text-4xl font-bold" isLoading={false} />
+        <CustomCard title={question.word} containerStyles="w-full mt-7 h-[250px] bg-[#EA9AB2]" textStyles="text-center text-4xl font-pbold text-white" isLoading={false} />
         :
         <CustomCard title="No question available" containerStyles="w-full mt-7 h-[250px]" textStyles="text-center" isLoading={true} />
         }
@@ -96,12 +98,14 @@ const gamePlay = () => {
               handlePress={() => selectAnswer(options[0])}
               containerStyles={`flex-1 mr-1 h-full ${getButtonColor(options[0])}`}
               isLoading={playing? false: true}
+              textStyles={'text-xl'}
             />
             <CustomButton
               title={options[1].key}
               handlePress={() => selectAnswer(options[1])}
               containerStyles={`flex-1 ml-1 h-full ${getButtonColor(options[1])}`}
               isLoading={playing? false: true}
+              textStyles={'text-xl'}
             />
           </View>
           <View className="flex-row justify-center items-center mt-2 h-[125px]">
@@ -110,12 +114,14 @@ const gamePlay = () => {
               handlePress={() => selectAnswer(options[2])}
               containerStyles={`flex-1 mr-1 h-full ${getButtonColor(options[2])}`}
               isLoading={playing? false: true}
+              textStyles={'text-xl'}
             />
             <CustomButton
               title={options[3].key}
               handlePress={() => selectAnswer(options[3])}
               containerStyles={`flex-1 ml-1 h-full ${getButtonColor(options[3])}`}
               isLoading={playing? false: true}
+              textStyles={'text-xl'}
             />
           </View>
         </>
@@ -124,16 +130,17 @@ const gamePlay = () => {
       )}
         
         {playing ? (
-          <CustomButton title="Check" handlePress={checkAnswer} isLoading={answer? false: true} containerStyles="h-[50px] w-full mt-7 bg-green-500"/>
+          <CustomButton title="Check" handlePress={checkAnswer} isLoading={answer? false: true} containerStyles="h-[50px] w-full mt-7 bg-secondary-200"/>
         ):(
-          <CustomButton title="Next" handlePress={start} containerStyles="h-[50px] w-full mt-7 bg-green-500"/>
+          <CustomButton title="Next" handlePress={start} containerStyles="h-[50px] w-full mt-7 bg-secondary-200"/>
         )}
 
-          <StatusBar backgroundColor='#161622'
+          <StatusBar backgroundColor='#9cdcfe'
             style='light'
           />
       </View>
     </ScrollView>
+    </ImageBackground>
   </SafeAreaView>
   )
 }

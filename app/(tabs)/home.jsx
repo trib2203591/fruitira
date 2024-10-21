@@ -1,9 +1,10 @@
-import { View, Text,SafeAreaView, ScrollView, StatusBar, StyleSheet } from 'react-native'
+import { View, Text,SafeAreaView, ScrollView, StatusBar, StyleSheet, ImageBackground } from 'react-native'
 import { useState, useCallback } from 'react'
 import { useFocusEffect } from 'expo-router'
 import { router } from 'expo-router'
 
 import CustomButton from '../../components/CustomButton'
+import { images } from '../../constants'
 
 import { getScore } from '../../lib/local/manageScore'
 import { useGlobalContext } from '../../context/GlobalProvider'
@@ -20,10 +21,11 @@ const Home = () => {
   )
   return (
     <SafeAreaView className="bg-primary h-full">
+    <ImageBackground source={images.backGround} resizeMode="cover" className="h-full">
     <ScrollView contentContainerStyle={styles.scrollViewContent}>
       <View className="w-full justify-center items-center h-full px-4 my-6">
         <Logo/>
-        <Text className="text-2xl text-white mt-10 font-semibold">Your score: {score}</Text>
+        <Text className="text-2xl text-secondary-200 mt-20 font-psemibold">Your score: {score}</Text>
         <CustomButton
           title="Start"
           handlePress={() => {router.push('/gamePlay')}}
@@ -32,10 +34,11 @@ const Home = () => {
         />
       </View>
       
-      <StatusBar backgroundColor='#161622'
+      <StatusBar backgroundColor='#9cdcfe'
             style='light'
           />
     </ScrollView>
+    </ImageBackground>
   </SafeAreaView>
   )
 }

@@ -1,9 +1,11 @@
 import React, { useState, useCallback } from 'react';
-import { SafeAreaView, View, Text, FlatList, ActivityIndicator, RefreshControl, StatusBar } from 'react-native';
+import { SafeAreaView, View, Text, FlatList, ActivityIndicator, RefreshControl, StatusBar, ImageBackground } from 'react-native';
 import { useFocusEffect } from 'expo-router'
 
 import { getLeaderboard } from '../../lib/axiosAPI/score'; 
 import { useGlobalContext } from '../../context/GlobalProvider'
+
+import { images } from '../../constants';
 
 const LeaderboardScreen = () => {
   const {user} = useGlobalContext();
@@ -39,16 +41,16 @@ const LeaderboardScreen = () => {
 
     if (index === 0) {
       rankColor = 'text-yellow-500'; 
-      backgroundColor = 'bg-yellow-200';
+      backgroundColor = 'bg-yellow-200 border-yellow-300 border-4';
     } else if (index === 1) {
-      rankColor = 'text-gray-300'; 
-      backgroundColor = 'bg-gray-200'; 
+      rankColor = 'text-gray-400'; 
+      backgroundColor = 'bg-gray-200 border-gray-300 border-4'; 
     } else if (index === 2) {
       rankColor = 'text-orange-500';
-      backgroundColor = 'bg-orange-200';
+      backgroundColor = 'bg-orange-200 border-orange-300 border-4';
     } else {
       rankColor = 'text-base';
-      backgroundColor = 'bg-gray-500'; 
+      backgroundColor = 'bg-white opacity-90'; 
     }
     return (
     <View className={`${backgroundColor} w-full my-2 p-4 rounded-lg shadow`}>
@@ -84,7 +86,7 @@ const LeaderboardScreen = () => {
   }
 
   const ListHeader = () => (
-    <View className=" bg-primary rounded-lg shadow p-4 border-4 border-secondary-100">
+    <View className="bg-secondary rounded-lg shadow p-4 border-4 border-secondary-100">
             <Text className="text-3xl text-white font-bold text-center">Leaderboard</Text>
             <View className="flex-row justify-between mt-4 p-2 rounded-lg">
               <Text className="text-lg text-white font-bold">Rank</Text>
@@ -94,7 +96,8 @@ const LeaderboardScreen = () => {
           </View>
   )
     return (
-      <SafeAreaView className="bg-primary h-full pb-[26px]">
+      <SafeAreaView className="bg-primary h-full">
+        <ImageBackground source={images.backGround} resizeMode="cover" className="h-full w-full">
         <View className="w-full justify-center items-center h-full px-4 my-6">
           
 
@@ -114,9 +117,10 @@ const LeaderboardScreen = () => {
           />
         </View>
       
-        <StatusBar backgroundColor='#161622'
+        <StatusBar backgroundColor='#9cdcfe'
             style='light'
           />
+      </ImageBackground>
     </SafeAreaView>
     );
 };

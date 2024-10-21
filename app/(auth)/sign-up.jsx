@@ -1,12 +1,12 @@
-import { View, Text, ScrollView, Image, Alert, StatusBar } from 'react-native'
+import { View, Text, ScrollView, Image, Alert, StatusBar, ImageBackground } from 'react-native'
 import { useState } from 'react'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import FormField from '../../components/FormField'
 import CustomButton from '../../components/CustomButton'
-
 import { images } from '../../constants'
+
 import { Link, router } from 'expo-router'
 import { register } from '../../lib/axiosAPI/auth'
 import { storeUser } from '../../lib/local/manageUser'
@@ -66,11 +66,12 @@ const SignUp  = () => {
 
   return (
     <SafeAreaView className="bg-primary h-full">
+      <ImageBackground source={images.backGround} resizeMode="cover" className="h-full">
       <ScrollView>
         <View className="w-full justify-center items-center h-full px-4 my-6">
           <Logo/>
 
-          <Text className="text-2xl text-white mt-10 font-semibold">Create a new account</Text>
+          <Text className="text-2xl text-secondary-200 mt-10 font-semibold">Create a new account</Text>
           
           <FormField title="Username"
             value={form.username}
@@ -99,14 +100,15 @@ const SignUp  = () => {
             <Text className="text-white">
               Have an account already?
             </Text>
-            <Link href="/sign-in" className="text-lg font-psemibold text-secondary">Login</Link>
+            <Link href="/sign-in" className="text-lg font-psemibold text-secondary-200">Login</Link>
 
           </View>
         </View>
-        <StatusBar backgroundColor='#161622'
+        <StatusBar backgroundColor='#9cdcfe'
             style='light'
           />
       </ScrollView>
+      </ImageBackground>
     </SafeAreaView>
   )
 }
