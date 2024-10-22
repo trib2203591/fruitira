@@ -1,5 +1,6 @@
 import { View, Text, SafeAreaView, ScrollView, StatusBar, Alert, ImageBackground } from 'react-native'
 import { useState, useEffect } from 'react'
+import { router } from 'expo-router'
 
 import CustomCard from '../../components/CustomCard'
 import CustomButton from '../../components/CustomButton'
@@ -82,17 +83,21 @@ const gamePlay = () => {
     <SafeAreaView className="bg-primary h-full ">
     <ImageBackground source={images.backGround} resizeMode="cover" className="h-full">
     <ScrollView>
-      <View className="w-full justify-center items-center h-dvh px-4 my-6 ">
-        <Text className="text-2xl text-secondary-200 mt-7 font-psemibold">score: {score}</Text>
+      <View className="w-full justify-center items-center h-dvh px-4 my-6">
+        <View className="w-full mt-5 flex-row items-center justify-between">
+          <CustomButton title="< Back" textStyles={'text-sm text-secondary-200'} containerStyles={'bg-transparent w-[50px] h-[20px'} handlePress={() => router.replace('/home') }/>
+          <Text className="text-2xl text-secondary-200 font-psemibold absolute left-[33%]">score: {score}</Text>
+        </View>
+
         {question?
-        <CustomCard title={question.word} containerStyles="w-full mt-7 h-[250px] bg-[#EA9AB2]" textStyles="text-center text-4xl font-pbold text-white" isLoading={false} />
+        <CustomCard title={question.word} containerStyles="w-full mt-3 h-[250px] bg-[#EA9AB2]" textStyles="text-center text-4xl font-pbold text-white" isLoading={false} />
         :
         <CustomCard title="No question available" containerStyles="w-full mt-7 h-[250px]" textStyles="text-center" isLoading={true} />
         }
 
         {options? (
           <>
-          <View className="flex-row justify-center items-center mt-7 h-[125px]">
+          <View className="flex-row justify-center items-center mt-6 h-[125px]">
             <CustomButton
               title={options[0].key}
               handlePress={() => selectAnswer(options[0])}
@@ -130,15 +135,15 @@ const gamePlay = () => {
       )}
         
         {playing ? (
-          <CustomButton title="Check" handlePress={checkAnswer} isLoading={answer? false: true} containerStyles="h-[50px] w-full mt-7 bg-secondary-200"/>
+          <CustomButton title="Check" handlePress={checkAnswer} isLoading={answer? false: true} containerStyles="h-[50px] w-full mt-6 bg-secondary-200"/>
         ):(
-          <CustomButton title="Next" handlePress={start} containerStyles="h-[50px] w-full mt-7 bg-secondary-200"/>
+          <CustomButton title="Next" handlePress={start} containerStyles="h-[50px] w-full mt-6 bg-secondary-200"/>
         )}
 
-          <StatusBar backgroundColor='#9cdcfe'
+      </View>
+      <StatusBar backgroundColor='#9cdcfe'
             style='light'
           />
-      </View>
     </ScrollView>
     </ImageBackground>
   </SafeAreaView>

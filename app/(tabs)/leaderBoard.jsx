@@ -96,7 +96,7 @@ const LeaderboardScreen = () => {
           </View>
   )
     return (
-      <SafeAreaView className="bg-primary h-full">
+      <SafeAreaView className="bg-primary h-full pb-[25px]">
         <ImageBackground source={images.backGround} resizeMode="cover" className="h-full w-full">
         <View className="w-full justify-center items-center h-full px-4 my-6">
           

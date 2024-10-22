@@ -55,6 +55,9 @@ const delAccount = () => {
       <ImageBackground source={images.backGround} resizeMode="cover" className="h-full">
       <ScrollView>
         <View className="w-full justify-center items-center h-full px-4 my-6">
+          <View className="self-start items-start justify-center">
+            <CustomButton title="< Back" textStyles={'text-sm text-secondary-200'} containerStyles={'bg-transparent w-[50px] h-[20px'} handlePress={() => router.replace('/home') }/>
+          </View>
           <Logo />
 
           <Text className="text-2xl text-secondary-200 mt-10 font-semibold">Delete your account</Text>
