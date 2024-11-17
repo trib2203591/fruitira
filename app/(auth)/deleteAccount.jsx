@@ -81,7 +81,7 @@ const delAccount = () => {
           />
 
         </View>
-        <StatusBar backgroundColor='#9cdcfe'
+        <StatusBar backgroundColor='#EFCFE3'
             style='light'
           />
       </ScrollView>

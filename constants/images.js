@@ -1,11 +1,19 @@
-import profile from "../assets/images/profile.png";
-import thumbnail from "../assets/images/thumbnail.png";
-import cards from "../assets/images/cards.png";
-import path from "../assets/images/path.png";
-import logo from "../assets/images/logo.png";
-import logoSmall from "../assets/images/logo-small.png";
-import empty from "../assets/images/empty.png";
+import seedling from "../assets/avatars/seedling.png";
+import sprout from "../assets/avatars/sprout.png";
+import sapling from "../assets/avatars/sapling.png";
+import tree from "../assets/avatars/tree.png";
+import oldGrowth from "../assets/avatars/old_growth.png";
 import backGround from "../assets/background.png";
 import fruits from "../assets/fruit.png";
+import lock from "../assets/lock.png";
 
-export default { profile, thumbnail, cards, path, logo, logoSmall, empty, backGround, fruits };
+export default {
+  seedling,
+  sprout,
+  sapling,
+  tree,
+  oldGrowth,
+  backGround,
+  fruits,
+  lock
+}

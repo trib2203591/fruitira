@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { SafeAreaView, View, Text, FlatList, ActivityIndicator, RefreshControl, StatusBar, ImageBackground } from 'react-native';
 import { useFocusEffect } from 'expo-router'
 
-import { getLeaderboard } from '../../lib/axiosAPI/score'; 
+import { getLeaderBoard } from '../../lib/firebase/leaderBoard';
 import { useGlobalContext } from '../../context/GlobalProvider'
 
 import { images } from '../../constants';
@@ -17,6 +17,9 @@ const LeaderboardScreen = () => {
   useFocusEffect(
     useCallback(() => {
         fetchLeaderboard();
+        const interval = setInterval(fetchLeaderboard, 10000); 
+
+        return () => clearInterval(interval);
       },
       [],)
   )
@@ -24,11 +27,12 @@ const LeaderboardScreen = () => {
   const fetchLeaderboard = async () => {
     setRefreshing(true);  
     try {
-      const result = await getLeaderboard(); // Call to fetch leaderboard data
-      setLeaderboard(result); // Assuming the API returns an array of user data
+      const result = await getLeaderBoard(); 
+      setLeaderboard(result);
     } catch (error) {
       setError("Error fetching leaderboard");
       console.error("Error fetching leaderboard:", error);
+      console.log(error);
     } finally {
       setRefreshing(false);
       setIsLoading(false);
@@ -86,12 +90,12 @@ const LeaderboardScreen = () => {
   }
 
   const ListHeader = () => (
-    <View className="bg-secondary rounded-lg shadow p-4 border-4 border-secondary-100">
-            <Text className="text-3xl text-white font-bold text-center">Leaderboard</Text>
+    <View className="bg-primary rounded-lg shadow p-4 border-4 border-[#B3DEE2]">
+            <Text className="text-3xl text-secondary font-bold text-center">Leaderboard</Text>
             <View className="flex-row justify-between mt-4 p-2 rounded-lg">
-              <Text className="text-lg text-white font-bold">Rank</Text>
-              <Text className="text-lg text-white font-bold">Username</Text>
-              <Text className="text-lg text-white font-bold">Score</Text>
+              <Text className="text-lg text-secondary font-bold">Rank</Text>
+              <Text className="text-lg text-secondary font-bold">Username</Text>
+              <Text className="text-lg text-secondary font-bold">Score</Text>
             </View>
           </View>
   )
@@ -105,7 +109,7 @@ const LeaderboardScreen = () => {
           data={leaderboard}
           renderItem={renderItem}
           ListHeaderComponent={ListHeader}
-          keyExtractor={(item) => item.user_id} 
+          keyExtractor={(item) => item.id} 
           className = "w-full pt-[10px]"
           ListEmptyComponent={() => <Text className="text-center text-lg mt-4 text-gray-500">No leaderboard data available.</Text>}
           refreshControl={
@@ -117,7 +121,7 @@ const LeaderboardScreen = () => {
           />
         </View>
       
-        <StatusBar backgroundColor='#9cdcfe'
+        <StatusBar backgroundColor='#EFCFE3'
             style='light'
           />
       </ImageBackground>

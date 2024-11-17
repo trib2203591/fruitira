@@ -1,5 +1,9 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { checkUserExistInDB, getUser, storeUser } from "../lib/local/manageUser";
+
+import { getUser, storeUser } from "../lib/local/manageUser";
+import { StoreProgressLocal } from "../lib/local/manageProgress";
+import { login } from "../lib/firebase/auth";
+import { GetUserProgress } from "../lib/firebase/progress";
 
 const GlobalContext = createContext();
 export const useGlobalContext = () => useContext(GlobalContext);
@@ -7,24 +11,30 @@ export const useGlobalContext = () => useContext(GlobalContext);
 const GlobalProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState(null);
+    const [progress, setProgress] = useState(null)
     const [isLoading, setIsLoading] = useState(true);
 
     const prepareApp = async () => {
         try {
-            const user = await getUser();
+            var user = await getUser(); 
+            console.log(user);
+            if(!user) {
+                return;
+            }
+            user = await login(user.email, user.password); 
             if (user) {
-                const score = await checkUserExistInDB();
-                if (score) {
-                    setIsLoggedIn(true);
-                    setUser({ ...user, score: score });
-                    await storeUser(user.user_id, user.username, user.password, score);
-                } else {
-                    setIsLoggedIn(false);
-                    setUser(null);
-                }
+                const progress = await GetUserProgress(user); 
+                setIsLoggedIn(true);
+                const userInfo = await getUser();
+                setUser(userInfo); 
+                console.log(userInfo);
+                
+                setProgress(progress) 
+                await StoreProgressLocal(progress);
             } else {
                 setIsLoggedIn(false);
                 setUser(null);
+                setProgress(null);
             }
         } catch (error) {
             console.log("Error preparing app:", error);
@@ -44,7 +54,10 @@ const GlobalProvider = ({ children }) => {
                 setIsLoggedIn,
                 user,
                 setUser,
-                isLoading
+                isLoading,
+                setIsLoading,
+                progress, 
+                setProgress
             }}
         >
             {children}

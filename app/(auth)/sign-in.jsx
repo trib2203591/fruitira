@@ -1,6 +1,7 @@
 import { View, Text, ScrollView, Alert, StatusBar, ImageBackground } from 'react-native'
 import { useState } from 'react'
 import { router } from 'expo-router'
+import { Link } from 'expo-router'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -8,57 +9,46 @@ import FormField from '../../components/FormField'
 import CustomButton from '../../components/CustomButton'
 import { images } from '../../constants'
 
-import { Link } from 'expo-router'
-import { login } from '../../lib/axiosAPI/auth'
-import { storeUser } from '../../lib/local/manageUser'
-import { getScore } from '../../lib/axiosAPI/score'
+import { login } from '../../lib/firebase/auth'
+import { GetUserProgress } from '../../lib/firebase/progress'
+import { GetUserDoc } from '../../lib/firebase/user'
+import { storeUser, getUser } from '../../lib/local/manageUser'
+import { StoreProgressLocal } from '../../lib/local/manageProgress'
 import { useGlobalContext } from '../../context/GlobalProvider';
 import Logo from '../../components/Logo'
 
 
 const SignIn = () => {
-  const {setUser} = useGlobalContext()
+  const {setUser, setProgress} = useGlobalContext()
   const [form, setForm] = useState({
-    username: '',
+    email: '',
     password: ''
   })
 
   const [isSubmitting, setisSubmitting] = useState(false)
 
   const submit = async () => {
-    if(!form.username || !form.password) {
+    if(!form.email || !form.password) {
       Alert.alert('error','fill all the fields')
       return
     }
     setisSubmitting(true);
 
     try {
-      const result = await login(form.username, form.password)
-      if(result.status === 200){
-        Alert.alert(result.message)
-
-        const score = await getScore(result.user_id)
-
-        await storeUser(result.user_id, form.username, form.password, score[0].score)
-
-        const value = {
-          user_id: result.user_id,
-          username: form.username,
-          password: form.password,
-          score: score[0].score
-        }
-        setUser(value)
-
-        router.replace('/home')
+        const result = await login(form.email, form.password)
+        setisSubmitting(true);
+        const userInfo = await GetUserDoc(result);
+        await storeUser(result, userInfo.username, form.password);
+        await setUser(getUser());
+        const progress = await GetUserProgress(result);
+        await StoreProgressLocal(progress);
+        setProgress(progress);
+        router.replace('/home');
+      } catch (error) {
+        Alert.alert('Error', error.message);
+      } finally {
+        setisSubmitting(false)
       }
-      else{
-        Alert.alert(result.message)
-      }
-    } catch (error) {
-      Alert.alert('error', error.message)
-    } finally {
-      setisSubmitting(false)
-    }
   }
 
   return (
@@ -70,9 +60,9 @@ const SignIn = () => {
 
           <Text className="text-2xl text-secondary-200 mt-10 font-semibold">Log in to Fruity</Text>
           
-          <FormField title="Username"
-            value={form.username}
-            handleChangeText={(e) => setForm({...form, username: e})}
+          <FormField title="Email"
+            value={form.email}
+            handleChangeText={(e) => setForm({...form, email: e})}
             otherStyles="mt-7"
           />
 
@@ -95,7 +85,7 @@ const SignIn = () => {
 
           </View>
         </View>
-        <StatusBar backgroundColor='#9cdcfe'
+        <StatusBar backgroundColor='#EFCFE3'
             style='dark'
           />
       </ScrollView>

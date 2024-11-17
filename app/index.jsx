@@ -7,7 +7,6 @@ import { images } from '../constants';
 import CustomButton from '../components/CustomButton';
 import Logo from '../components/Logo';
 
-
 import { useGlobalContext } from '../context/GlobalProvider';
 
 
@@ -54,7 +53,7 @@ export default function App() {
             containerStyles="w-full mt-7" 
           />
         </View>
-        <StatusBar backgroundColor='#9cdcfe'
+        <StatusBar backgroundColor='#EFCFE3'
             style='light'
           />
       </ScrollView>

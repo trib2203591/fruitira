@@ -8,23 +8,26 @@ import CustomButton from '../../components/CustomButton'
 import { images } from '../../constants'
 
 import { Link, router } from 'expo-router'
-import { register } from '../../lib/axiosAPI/auth'
-import { storeUser } from '../../lib/local/manageUser'
+import { register } from '../../lib/firebase/auth'
+import { GetUserProgress } from '../../lib/firebase/progress'
+import { storeUser, getUser } from '../../lib/local/manageUser'
+import { StoreProgressLocal } from '../../lib/local/manageProgress'
 import { useGlobalContext } from '../../context/GlobalProvider';
 import Logo from '../../components/Logo'
 
 const SignUp  = () => {
-  const {setUser} = useGlobalContext()
+  const {setUser, setProgress} = useGlobalContext()
   const [form, setForm] = useState({
     confirmPassword: '',
     password: '',
+    email: '',
     username: ''
   })
 
   const [isSubmitting, setisSubmitting] = useState(false)
 
   const submit = async () => {
-    if(!form.confirmPassword || !form.password || !form.username) {
+    if(!form.confirmPassword || !form.password || !form.email) {
       Alert.alert('Warning','fill all the fields')
     }
     else if(form.confirmPassword !== form.password) {
@@ -32,32 +35,16 @@ const SignUp  = () => {
     }
     else{
       try {
-        const result = await register(form.username, form.password)
         setisSubmitting(true);
-        if(result){
-          if(result.status === 201) {
-            Alert.alert('register OK')
-            await storeUser(result.user_id, form.username, form.password, 0)
-
-            const value = {
-              user_id: result.user_id,
-              username: form.username,
-              password: form.password,
-              score: 0
-            }
-            setUser(value)
-
-            router.replace('/home');
-          }
-          else {
-            Alert.alert(result.message)
-          }
-        }
-        else {
-          Alert.alert('something went wrong')
-        }
+        const result = await register(form.email, form.username, form.password)
+        await storeUser(result, form.username, form.password);
+        await setUser(getUser());
+        const progress = await GetUserProgress(result);
+        await StoreProgressLocal(progress);
+        setProgress(progress);
+        router.replace('/home');
       } catch (error) {
-        Alert.alert('error', error.message)
+        Alert.alert('Error', error.message);
       } finally {
         setisSubmitting(false)
       }
@@ -76,6 +63,12 @@ const SignUp  = () => {
           <FormField title="Username"
             value={form.username}
             handleChangeText={(e) => setForm({...form, username: e})}
+            otherStyles="mt-7"
+          />
+
+          <FormField title="Email"
+            value={form.email}
+            handleChangeText={(e) => setForm({...form, email: e})}
             otherStyles="mt-7"
           />
 
@@ -104,7 +97,7 @@ const SignUp  = () => {
 
           </View>
         </View>
-        <StatusBar backgroundColor='#9cdcfe'
+        <StatusBar backgroundColor='#EFCFE3'
             style='light'
           />
       </ScrollView>
