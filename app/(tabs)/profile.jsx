@@ -74,7 +74,7 @@ const Profile = () => {
           />
           <Text className="text-2xl text-[#5AC460] font-bold text-center">{title}</Text>
 
-          <XPBar currentXP={currentXP} requiredXP={requiredXP} currentLevel={progress.level}/>
+          <XPBar currentXP={currentXP} requiredXP={requiredXP} currentLevel={progress.level} incrementXP={0}/>
 
           <Text className="text-xl text-secondary font-pbold text-left w-full pt-4">Your stats :</Text>
           <View className="flex-row justify-between items-center w-full">

@@ -8,8 +8,6 @@ import CustomButton from '../components/CustomButton';
 import Logo from '../components/Logo';
 
 import { useGlobalContext } from '../context/GlobalProvider';
-import { getGame } from '../lib/firebase/game';
-
 
 export default function App() {
   const{isLoading, isLoggedIn} = useGlobalContext();
@@ -51,14 +49,7 @@ export default function App() {
             title="Get started with Email"
             handlePress={() => router.push('/sign-in')}
             containerStyles="w-full mt-7" 
-          />
-          <CustomButton
-            title="Get started with Email"
-            handlePress={async () => {
-              const game = await getGame(1);
-              console.log(game);
-            }}
-            containerStyles="w-full mt-7" 
+            isLoading={isLoading}
           />
         </View>
         <StatusBar backgroundColor='#EFCFE3'

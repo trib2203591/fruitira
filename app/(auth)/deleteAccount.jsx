@@ -8,8 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import FormField from '../../components/FormField'
 import CustomButton from '../../components/CustomButton'
 import { images } from '../../constants'
-
-import { deleteAccount } from '../../lib/axiosAPI/auth'
+import { deleteUserDataAndAuth } from '../../lib/firebase/user'
 import { useGlobalContext } from '../../context/GlobalProvider';
 import Logo from '../../components/Logo'
 
@@ -33,18 +32,12 @@ const delAccount = () => {
       return
     }
     setisSubmitting(true);
-
     try {
-      const result = await deleteAccount(user.username, form.password)
-      if(result.status === 200){
-        Alert.alert(result.message)
-        router.replace('/sign-in')
-      }
-      else{
-        Alert.alert(result.message)
-      }
+      await deleteUserDataAndAuth();
+      Alert.alert('Success', "User deleted");
+      router.replace('/sign-in');
     } catch (error) {
-      Alert.alert('error', error.message)
+      Alert.alert('Error', error.message);
     } finally {
       setisSubmitting(false)
     }

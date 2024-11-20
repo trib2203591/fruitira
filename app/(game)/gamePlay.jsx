@@ -1,11 +1,13 @@
-import { View, Text, SafeAreaView, ScrollView, StatusBar, Alert, ImageBackground, TouchableOpacity, Modal } from 'react-native'
+import { View, Text, SafeAreaView, ScrollView, StatusBar, Alert, ImageBackground } from 'react-native'
 import { useLocalSearchParams } from 'expo-router/build/hooks'
 import { useState, useEffect } from 'react'
 import { router } from 'expo-router'
 
 import CustomCard from '../../components/CustomCard'
 import CustomButton from '../../components/CustomButton'
+import XPBar from '../../components/XpBar'
 import { images } from '../../constants'
+import { xpTable } from '../../constants/xpTable'
 
 import { getGame } from '../../lib/firebase/game'
 import { useGlobalContext } from '../../context/GlobalProvider'
@@ -21,10 +23,7 @@ const gamePlay = () => {
   const [question, setQuestion] = useState(null)
   const [answer, setAnswer] = useState(null)
   const [playing, setPlaying] = useState(true)
-  const [modalVisible, setModalVisible] = useState(false);
-  const showPopup = () => setModalVisible(true);
-  const hidePopup = () => setModalVisible(false);
-
+  const [fruit, setFruit] = useState(images.apple)
   useEffect(() => {
     if(parseInt(data.dif, 10) === 1) {
       setProgressFactor(
@@ -48,22 +47,25 @@ const gamePlay = () => {
         }
       );
     }
-    console.log(progressFactor);
     start()
   }, [])
+
+  const getxpfact = async () => {
+    return progressFactor.xp;
+  }
 
   const start = async () => {
     setIsLoading(true);
     try {
       let result = await getGame(parseInt(data.dif, 10));
-      console.log(result);
   
       if(question){
         while(result.question.id === question.id){ 
           result = await getGame(parseInt(data.dif, 10));
         }
       }
-  
+      console.log(result);
+      setFruit(images[result.question.id])
       setPlaying(true);
       setAnswer(null);
       setOptions(result.options);
@@ -90,6 +92,38 @@ const gamePlay = () => {
     } else {
       newProgress = CalculateNewProgress(progress, false, progressFactor)
     }
+    if(newProgress.level > progress.level) {
+      var message;
+      switch (newProgress.level) {
+        case 4:
+          message = `You reached level ${newProgress.level}\n- New title: Sprout!`;
+          break;
+        case 6:
+          message = `You reached level ${newProgress.level}\n- Unlocked: Medium difficulty!`;
+          break;
+        case 8:
+          message = `You reached level ${newProgress.level}\n- New title: Sapling!`;
+          break;
+        case 11:
+          message = `You reached level ${newProgress.level}\n- Unlocked: Hard difficulty!`;
+          break;
+        case 12:
+          message = `You reached level ${newProgress.level}\n- New title: Tree!`;
+          break;
+        case 16:
+          message = `You reached level ${newProgress.level}\n- New title: Old Growth!`;
+          break;
+        case 20:
+          if(newProgress.xp === xpTable[20]) message = `You reached MAX level ${newProgress.level}\n- Congratulations! You completed the game!`;
+        default:
+          message = `You reached level ${newProgress.level}`;
+        break;
+      }
+
+      Alert.alert(
+        "Level Up!",
+        message)
+    }
     setPlaying(false)
     await updateProgress(newProgress);
   }
@@ -99,10 +133,10 @@ const gamePlay = () => {
       setIsLoading(true);
       setProgress(newProgress);
       await UpdateProgressLocal(newProgress);
-      //await UpdateProgressInDb(user, newProgress);
+      await UpdateProgressInDb(user, newProgress); 
     } catch (error) {
       console.log(error);
-    } finally {
+    }finally {
       setIsLoading(false);
     }
   }
@@ -119,40 +153,20 @@ const gamePlay = () => {
     return answer === option ? 'bg-[#B3DEE2]' : 'bg-white' 
   }
 
+
   return (
     <SafeAreaView className="bg-primary h-full ">
     <ImageBackground source={images.backGround} resizeMode="cover" className="h-full">
     <ScrollView>
-    <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={hidePopup}
-      >
-        <View className="flex-1 bg-black/50 justify-center items-center">
-          <View className="w-80 bg-white rounded-lg p-6 shadow-lg">
-            <Text className="text-xl font-bold text-gray-800 mb-4">Custom Alert</Text>
-            <Text className="text-gray-600 text-center mb-6">
-              This is a custom popup alert styled with NativeWind!
-            </Text>
-            <TouchableOpacity 
-              className="bg-purple-600 px-6 py-3 rounded-lg" 
-              onPress={hidePopup}
-            >
-              <Text className="text-white text-lg font-semibold text-center">Close</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
-
       <View className="w-full justify-center items-center h-dvh px-4 my-6">
         <View className="w-full mt-5 flex-row items-center justify-between">
           <CustomButton title="< Back" textStyles={'text-sm text-secondary-200'} containerStyles={'bg-transparent w-[50px] h-[20px'} handlePress={() => router.replace('/home') }/>
-          <Text className="text-2xl text-secondary-200 font-psemibold absolute left-[33%]">score: {progress.score}</Text>
+          <Text className="text-2xl text-secondary-200 font-psemibold absolute left-[33%]">Score: {progress.score}</Text>
         </View>
+        <XPBar currentXP={progress.xp} requiredXP={xpTable[progress.level]} currentLevel={progress.level} incrementXP={getxpfact()}/>
 
         {question?
-        <CustomCard title={question.question} containerStyles="w-full mt-3 h-[250px] bg-[#EA9AB2]" textStyles="text-center text-4xl font-pbold text-white" isLoading={false} />
+        <CustomCard title={question.question} containerStyles="w-full mt-3 h-[175px] bg-[#EA9AB2]" textStyles="text-center text-4xl font-pbold text-white" isLoading={false} image={fruit}/>
         :
         <CustomCard title="No question available" containerStyles="w-full mt-7 h-[250px]" textStyles="text-center" isLoading={true} />
         }

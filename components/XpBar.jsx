@@ -1,8 +1,15 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import { useState, useEffect } from 'react';
 
-const XPBar = ({ currentXP, requiredXP, currentLevel}) => {
+const XPBar = ({ currentXP, requiredXP, currentLevel, incrementXP }) => {
+    const [showXPText, setShowXPText] = useState(false);
     const progress = Math.min(Math.max(currentXP / requiredXP, 0), 1);; 
+
+    useEffect(() => {
+        setShowXPText(true);
+        setTimeout(() => setShowXPText(false), 400);
+      }, [currentXP, requiredXP, currentLevel]);
 
     return (
         <View className="items-center mt-1 w-full">
@@ -21,6 +28,11 @@ const XPBar = ({ currentXP, requiredXP, currentLevel}) => {
                     XP: {currentXP}/{requiredXP}
                 </Text>
             </View>
+            {showXPText && (
+                <View className="absolute top-[47%] right-[10%]">
+                    <Text className="text-green-600 text-lg font-semibold">+{incrementXP} XP</Text>
+                </View>
+            )}
         </View>
     );
 };

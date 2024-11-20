@@ -31,6 +31,9 @@ const SignIn = () => {
     if(!form.email || !form.password) {
       Alert.alert('error','fill all the fields')
       return
+    }    else if (form.username.includes(' ') || form.email.includes(' ') || form.password.includes(' ')) {
+      Alert.alert('Warning', "fields can't contain spaces")
+      return
     }
     setisSubmitting(true);
 

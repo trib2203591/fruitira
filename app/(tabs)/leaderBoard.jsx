@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { SafeAreaView, View, Text, FlatList, ActivityIndicator, RefreshControl, StatusBar, ImageBackground } from 'react-native';
+import { SafeAreaView, View, Text, FlatList, ActivityIndicator, RefreshControl, StatusBar, ImageBackground, Image } from 'react-native';
 import { useFocusEffect } from 'expo-router'
 
 import { getLeaderBoard } from '../../lib/firebase/leaderBoard';
@@ -42,6 +42,19 @@ const LeaderboardScreen = () => {
   const renderItem = ({ item, index }) => {
     let rankColor;
     let backgroundColor;
+    let avatar;
+
+    if (item.level >= 4) {
+      avatar = images.sprout;
+    } else if (item.level >= 8) {
+      avatar = images.sapling;
+    } else if (item.level >= 12) {
+      avatar = images.tree;
+    } else if (item.level >= 16) {
+      avatar = images.oldGrowth;
+    } else {
+      avatar = images.seedling;
+    }
 
     if (index === 0) {
       rankColor = 'text-yellow-500'; 
@@ -60,13 +73,18 @@ const LeaderboardScreen = () => {
     <View className={`${backgroundColor} w-full my-2 p-4 rounded-lg shadow`}>
       <View className="flex-row justify-between items-center">
         <Text className={`${rankColor} left-6 font-bold text-lg`}>{index + 1}</Text>
+        <Image
+          source={avatar}
+          className="max-w-[50px] w-full h-[50px]"
+          resizeMode="contain"
+        />
         {user.username === item.username ? 
-          <View className="flex-row items-center">
+          <View className="flex-col items-center w-[120px]">
             <Text className={`text-base font-pmedium`}>{item.username}</Text>
             <Text className={`text-blue-500 font-pmedium`}>(You)</Text>
           </View>
             : 
-          <Text className={`text-base font-pmedium`}>{item.username}</Text>}
+          <Text className={`text-base font-pmedium w-[120px]`}>{item.username}</Text>}
         <Text className={"right-6 text-base font-bold text-green-500"}>{item.score}</Text>
       </View>
     </View>
@@ -94,6 +112,7 @@ const LeaderboardScreen = () => {
             <Text className="text-3xl text-secondary font-bold text-center">Leaderboard</Text>
             <View className="flex-row justify-between mt-4 p-2 rounded-lg">
               <Text className="text-lg text-secondary font-bold">Rank</Text>
+              <Text className="text-lg text-secondary font-bold">Title</Text>
               <Text className="text-lg text-secondary font-bold">Username</Text>
               <Text className="text-lg text-secondary font-bold">Score</Text>
             </View>
