@@ -33,7 +33,7 @@ const SignUp  = () => {
     else if(form.confirmPassword !== form.password) {
       Alert.alert('Warning', "passwords don't match")
     }
-    else if (form.username.includes(' ') || form.email.includes(' ') || form.password.includes(' ')) {
+    else if (form.email.includes(' ') || form.password.includes(' ')) {
       Alert.alert('Warning', "fields can't contain spaces")
     }
     else if (form.username.length > 20) {
