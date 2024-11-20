@@ -39,7 +39,8 @@ const SignIn = () => {
         setisSubmitting(true);
         const userInfo = await GetUserDoc(result);
         await storeUser(result, userInfo.username, form.password);
-        await setUser(getUser());
+        const user = await getUser();
+        await setUser(user);
         const progress = await GetUserProgress(result);
         await StoreProgressLocal(progress);
         setProgress(progress);

@@ -38,7 +38,8 @@ const SignUp  = () => {
         setisSubmitting(true);
         const result = await register(form.email, form.username, form.password)
         await storeUser(result, form.username, form.password);
-        await setUser(getUser());
+        const user = await getUser();
+        await setUser(user);
         const progress = await GetUserProgress(result);
         await StoreProgressLocal(progress);
         setProgress(progress);

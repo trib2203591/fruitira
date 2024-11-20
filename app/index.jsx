@@ -8,6 +8,7 @@ import CustomButton from '../components/CustomButton';
 import Logo from '../components/Logo';
 
 import { useGlobalContext } from '../context/GlobalProvider';
+import { getGame } from '../lib/firebase/game';
 
 
 export default function App() {
@@ -35,7 +36,7 @@ export default function App() {
             <Text className="text-3xl text-white font-bold text-center">
               This is an app for learning fruit vocabularies, named {' '}
               <Text className="text-secondary-200">
-                Fruity
+                Fruitira
               </Text>
             </Text>
           </View>
@@ -46,10 +47,17 @@ export default function App() {
             </Text>
 
           </View>
-
           <CustomButton
             title="Get started with Email"
             handlePress={() => router.push('/sign-in')}
+            containerStyles="w-full mt-7" 
+          />
+          <CustomButton
+            title="Get started with Email"
+            handlePress={async () => {
+              const game = await getGame(1);
+              console.log(game);
+            }}
             containerStyles="w-full mt-7" 
           />
         </View>
@@ -61,4 +69,4 @@ export default function App() {
     </SafeAreaView>
   );
 }
-//com.crash-course.aora
+

@@ -17,7 +17,6 @@ const GlobalProvider = ({ children }) => {
     const prepareApp = async () => {
         try {
             var user = await getUser(); 
-            console.log(user);
             if(!user) {
                 return;
             }
@@ -27,7 +26,6 @@ const GlobalProvider = ({ children }) => {
                 setIsLoggedIn(true);
                 const userInfo = await getUser();
                 setUser(userInfo); 
-                console.log(userInfo);
                 
                 setProgress(progress) 
                 await StoreProgressLocal(progress);
