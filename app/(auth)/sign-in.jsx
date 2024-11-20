@@ -31,15 +31,11 @@ const SignIn = () => {
     if(!form.email || !form.password) {
       Alert.alert('error','fill all the fields')
       return
-    }    else if (form.username.includes(' ') || form.email.includes(' ') || form.password.includes(' ')) {
-      Alert.alert('Warning', "fields can't contain spaces")
-      return
-    }
+    } 
     setisSubmitting(true);
 
     try {
         const result = await login(form.email, form.password)
-        setisSubmitting(true);
         const userInfo = await GetUserDoc(result);
         await storeUser(result, userInfo.username, form.password);
         const user = await getUser();

@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Fruity",
-    "slug": "fruity",
-    "scheme:": "fruity",
+    "name": "Fruitira",
+    "slug": "fruitira",
+    "scheme:": "fruitira",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
