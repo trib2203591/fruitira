@@ -28,13 +28,14 @@ const Profile = () => {
   )
 
   const setUp = async () => {
-    if (progress.level >= 4) {
+    
+    if (progress.level >= 4 && progress.level < 8) {
       setAvatar(images.sprout);
       setTitle("Sprout");
-    } else if (progress.level >= 8) {
+    } else if (progress.level >= 8 && progress.level < 12) {
       setAvatar(images.sapling);
       setTitle("Sapling");
-    } else if (progress.level >= 12) {
+    } else if (progress.level >= 12 && progress.level < 16) {
       setAvatar(images.tree);
       setTitle("Tree");
     } else if (progress.level >= 16) {
