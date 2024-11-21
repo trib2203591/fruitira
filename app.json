@@ -20,13 +20,18 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.crash-course.fruity"
+      "package": "com.triminecraft85.fruitira"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "0dc6176e-643e-4207-bf81-c98d5bd4eee8"
+      }
+    }
   }
 }

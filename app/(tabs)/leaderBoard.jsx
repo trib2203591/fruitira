@@ -44,11 +44,11 @@ const LeaderboardScreen = () => {
     let backgroundColor;
     let avatar;
 
-    if (item.level >= 4) {
+    if (item.level >= 4 && item.level < 8) {
       avatar = images.sprout;
-    } else if (item.level >= 8) {
+    } else if (item.level >= 8 && item.level < 12) {
       avatar = images.sapling;
-    } else if (item.level >= 12) {
+    } else if (item.level >= 12 && item.level < 16) {
       avatar = images.tree;
     } else if (item.level >= 16) {
       avatar = images.oldGrowth;
